@@ -1,0 +1,16 @@
+@font-face {
+    font-family: 'Tiny5';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("Tiny5-Regular.ttf") format("truetype");
+}
+
+
+@font-face {
+    font-family: 'ZenKurenaido';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("ZenKurenaido-Regular.ttf") format("truetype");
+}

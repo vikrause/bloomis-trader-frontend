@@ -1,0 +1,9 @@
+@import "vendor/normalize.css";
+@import "vendor/fonts/fonts.css";
+
+@import "components/App/App.css";
+@import "components/Header/Header.css";
+@import "components/Login/Login.css";
+@import "components/Main/Main.css";
+@import "components/CreateTask/CreateTask.css";
+@import "components/ActiveTask/ActiveTask.css";

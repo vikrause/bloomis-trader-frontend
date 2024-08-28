@@ -1,0 +1,75 @@
+.active_task {
+    display: flex;
+    max-width: 500px;
+    box-sizing: content-box;/*
+    border: 1px solid #cccccc;*/
+    border-radius: 15px;
+    flex-direction: column;
+    padding: 0 15px;
+}
+
+.active_task__text {
+    font-size: 24px;
+    font-weight: 600;
+    padding: 0;
+    margin: 23px 0;
+    align-self: center;
+}
+
+.active_task__table {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.active_task__table_row {
+    width: 100%;
+    display: inline-table;
+}
+
+.active_task__info_text:nth-child(1) {
+    width: 50%;
+    font-size: 20px;
+}
+
+.active_task__info_text:nth-child(2) {
+    width: 50%;
+    font-size: 20px;
+}
+
+.active_task__buttons {
+    display: flex;
+    flex-direction: row;
+    margin: 130px 0 23px 0;
+    gap: 20px;
+    justify-content: center;
+}
+
+.active_task__button {
+    width: 100%;
+    height: 50px;
+    font-size: 18px;
+    line-height: 1.16;
+    border: none;
+    border-radius: 2px;
+    background-color: #fff;
+    color: #000;
+    transition: opacity 0.2s linear;
+}
+
+.active_task__button__start {
+    background-color: #9baa5f;
+}
+
+.active_task__button__pause {
+    background-color: #aca055;
+}
+
+.active_task__button__cancel {
+    background-color: #ac5855;
+}
+
+.active_task__button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}

@@ -1,0 +1,128 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login__title {
+    margin: 60px 0 50px;
+    font-family: 'ZenKurenaido', ‘Arial’, sans-serif;
+    font-weight: 900;
+    color: #fff;
+    padding: 0;
+    font-size: 27px;
+    line-height: 1.21;
+}
+
+.login__text {
+    font-size: 14px;
+    line-height: 17px;
+    margin: 15px 0 0;
+    color: #fff;
+}
+
+.login__link {
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.3s linear;
+}
+
+.login__link:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+.login__input {
+    width: 358px;
+    outline: none;
+    border: none;
+    background: none;
+    border-bottom: 2px solid #ccc;
+    color: #fff;
+    font-size: 14px;
+    height: 30px;
+}
+
+.login__icon-pass {
+    z-index: 2;
+    width: 25px;
+    height: 25px;
+    background: url("../../images/vis.svg");
+    background-size: 25px 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+}
+
+.login__icon-pass:hover {
+    cursor: pointer;
+}
+
+.login__icon-notPass {
+    z-index: 2;
+    width: 25px;
+    height: 25px;
+    background: url("../../images/notVis.svg");
+    background-size: 25px 25px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+}
+
+.login__icon-notPass:hover {
+    cursor: pointer;
+}
+
+.login__group {
+    margin-top: 30px;
+    position: relative;
+}
+
+.login__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login__button {
+    width: 100%;
+    height: 50px;
+    margin: 216px 0 0;
+    font-size: 18px;
+    line-height: 1.16;
+    border: none;
+    border-radius: 2px;
+    background-color: #fff;
+    color: #000;
+    transition: opacity 0.2s linear;
+}
+
+.login__button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 600px){
+    .login__title {
+        font-size: 20px;
+        margin: 40px 0 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .login__input {
+        width: 260px;
+        height: 26px;
+    }
+}
+
+@media screen and (max-width: 890px) {
+    .login__button {
+        height: 46px;
+        margin: 173px 0 0;
+        font-size: 16px;
+    }
+}
+
