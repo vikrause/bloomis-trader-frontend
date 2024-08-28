@@ -1,5 +1,4 @@
-export default function ActiveTask({activeTask, isDataActiveTask}) {
-
+export default function ActiveTask({activeTask, isDataActiveTask, isActiveTaskPaused, onCancelTask, onStartTask, onPauseTask}) {
     return (
         <section className="active_task">
             <p className="active_task__text">Активное задание</p>
@@ -41,9 +40,13 @@ export default function ActiveTask({activeTask, isDataActiveTask}) {
                         </tbody>
                     </table>
                     <div className="active_task__buttons">
-                        <button className="active_task__button active_task__button__start" type="button">Старт</button>
-                        <button className="active_task__button active_task__button__pause" type="button">Пауза</button>
-                        <button className="active_task__button active_task__button__cancel" type="button">Отменить
+                        {isActiveTaskPaused &&
+                            <button className="active_task__button active_task__button__start" onClick={onStartTask} type="button">Старт</button>
+                        }
+                        {!isActiveTaskPaused &&
+                            <button className="active_task__button active_task__button__pause" onClick={onPauseTask} type="button">Пауза</button>
+                        }
+                        <button className="active_task__button active_task__button__cancel" onClick={onCancelTask} type="button">Отменить
                         </button>
                     </div>
                 </>

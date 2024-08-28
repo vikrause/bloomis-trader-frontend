@@ -47,6 +47,33 @@ class Api {
         });
     }
 
+    cancelTask() {
+        return fetch(`${this._baseUrl}/api/task/cancel`, {
+            method: 'POST',
+            headers: this._headers
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
+    startTask() {
+        return fetch(`${this._baseUrl}/api/task/start`, {
+            method: 'POST',
+            headers: this._headers
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
+    pauseTask() {
+        return fetch(`${this._baseUrl}/api/task/pause`, {
+            method: 'POST',
+            headers: this._headers
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
     getActiveTask() {
         return fetch(`${this._baseUrl}/api/activeTask`, {
             method: 'GET',

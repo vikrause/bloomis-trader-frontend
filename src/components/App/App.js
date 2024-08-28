@@ -13,6 +13,7 @@ function App() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [dataActiveTask, setDataActiveTask] = useState({});
     const [isDataActiveTask, setIsDataActiveTask] = useState(false);
+    const [isActiveTaskPaused, setIsActiveTaskPaused] = useState(false);
 
     function validateError(err) {
         switch (err.status) {
@@ -96,12 +97,47 @@ function App() {
                 "withdrawals_taken": res.withdrawals_taken,
                 "withdrawals_taken_amount": res.withdrawals_taken_amount
             });
+
             setIsDataActiveTask(true);
+
+            if (res.status === 'new' || res.status === 'processing') {
+                setIsActiveTaskPaused(false);
+            } else {
+                setIsActiveTaskPaused(true);
+            }
         }).catch((errorResponse) => {
             setIsDataActiveTask(false);
             if (errorResponse.status === 401) {
                 signOut();
             }
+        });
+    }
+
+    function cancelActiveTask() {
+        api.cancelTask().then(() => {
+            setIsDataActiveTask(false)
+        }).catch((errorResponse) => {
+            validateError(errorResponse);
+        });
+    }
+
+    function startActiveTask() {
+        api.startTask().then(() => {
+            setIsDataActiveTask(true)
+            setIsActiveTaskPaused(false);
+            getActiveTask();
+        }).catch((errorResponse) => {
+            validateError(errorResponse);
+        });
+    }
+
+    function pauseActiveTask() {
+        api.pauseTask().then(() => {
+            setIsDataActiveTask(true)
+            setIsActiveTaskPaused(true);
+            getActiveTask();
+        }).catch((errorResponse) => {
+            validateError(errorResponse);
         });
     }
 
@@ -146,8 +182,12 @@ function App() {
                         component={Main}
                         loggedIn={loggedIn}
                         onCreateTask={createTask}
+                        onCancelTask={cancelActiveTask}
+                        onStartTask={startActiveTask}
+                        onPauseTask={pauseActiveTask}
                         activeTask={dataActiveTask}
                         isDataActiveTask={isDataActiveTask}
+                        isActiveTaskPaused={isActiveTaskPaused}
                     />
                 }/>
             </Routes>

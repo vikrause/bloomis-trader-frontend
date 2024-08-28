@@ -44,6 +44,7 @@ export default function CreateTask(props) {
                            form="create_task"
                            name="total_withdrawal_amount"
                            type="number"
+                           min="5000"
                            value={totalWithdrawalAmount}
                            onChange={handleTotalAmountInput}
                            required
@@ -55,6 +56,7 @@ export default function CreateTask(props) {
                            form="create_task"
                            name="min_withdrawal_amount"
                            type="number"
+                           min="5000"
                            value={minWithdrawalAmount}
                            onChange={handleMinAmountInput}
                            required
@@ -66,8 +68,10 @@ export default function CreateTask(props) {
                            form="create_task"
                            name="max_withdrawal_amount"
                            value={maxWithdrawalAmount}
+                           min="5000"
                            onChange={handleMaxAmountInput}
-                           type="number" required
+                           type="number"
+                           required
                     />
                 </div>
                 <p className="create_task__metods__text">Методы</p>
@@ -75,33 +79,36 @@ export default function CreateTask(props) {
                 <div className="create_task__metods">
                     <div className="create_task__metods__item">
                         <input className="create_task__checkbox"
+                               id="payment_method_sbp"
                                form="create_task"
                                name="payment_method"
                                value="sbp"
                                onChange={handleMethodCheckboxChange}
                                type="checkbox"
                         />
-                        <label className="create_task__label" htmlFor="create_task">СБП</label>
+                        <label className="create_task__label" htmlFor="payment_method_sbp">СБП</label>
                     </div>
                     <div className="create_task__metods__item">
                         <input className="create_task__checkbox"
+                               id="payment_method_mobile"
                                form="create_task"
                                name="payment_method"
                                value="mobile"
                                onChange={handleMethodCheckboxChange}
                                type="checkbox"
                         />
-                        <label className="create_task__label" htmlFor="create_task">Мобильный счет</label>
+                        <label className="create_task__label" htmlFor="payment_method_mobile">Мобильный счет</label>
                     </div>
                     <div className="create_task__metods__item">
                         <input className="create_task__checkbox"
+                               id="payment_method_card"
                                form="create_task"
                                name="payment_method"
                                value="card"
                                onChange={handleMethodCheckboxChange}
                                type="checkbox"
                         />
-                        <label className="create_task__label" htmlFor="create_task">Карта</label>
+                        <label className="create_task__label" htmlFor="payment_method_card">Карта</label>
                     </div>
                 </div>
                 <button className="create_task__button" type="submit">Создать задачу</button>
