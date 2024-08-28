@@ -39,9 +39,10 @@ export default function CreateTask(props) {
             <p className="create_task__text">Создать новую задачу</p>
             <form className="create_task__form" name="create_task" id="create_task" onSubmit={handleSubmit}>
                 <div className="input__group">
-                    <label className="create_task__label" htmlFor="create_task">Общая сумма заявок</label>
+                    <label className="create_task__label" htmlFor="create_task_total_withdrawal_amount">Общая сумма заявок</label>
                     <input className="create_task__input"
                            form="create_task"
+                           id="create_task_total_withdrawal_amount"
                            name="total_withdrawal_amount"
                            type="number"
                            min="5000"
@@ -51,9 +52,10 @@ export default function CreateTask(props) {
                     />
                 </div>
                 <div className="input__group">
-                    <label className="create_task__label" htmlFor="create_task">Сумма заявки от</label>
+                    <label className="create_task__label" htmlFor="create_task_min_withdrawal_amount">Сумма заявки от</label>
                     <input className="create_task__input"
                            form="create_task"
+                           id="create_task_min_withdrawal_amount"
                            name="min_withdrawal_amount"
                            type="number"
                            min="5000"
@@ -63,8 +65,9 @@ export default function CreateTask(props) {
                     />
                 </div>
                 <div className="input__group">
-                    <label className="create_task__label" htmlFor="create_task">Сумма заявки до</label>
+                    <label className="create_task__label" htmlFor="create_task_max_withdrawal_amount">Сумма заявки до</label>
                     <input className="create_task__input"
+                           id="create_task_max_withdrawal_amount"
                            form="create_task"
                            name="max_withdrawal_amount"
                            value={maxWithdrawalAmount}

@@ -16,16 +16,14 @@ function App() {
     const [isActiveTaskPaused, setIsActiveTaskPaused] = useState(false);
 
     function validateError(err) {
-        switch (err.status) {
-            case 401:
+        err.then((err) => {
+            if (err.code === 401) {
                 signOut();
-                break;
-            default:
-                err.then((err) => {
-                    dispatchErrorNotification(err.detail);
-                });
-                break;
-        }
+                dispatchErrorNotification(err.message);
+            } else {
+                dispatchErrorNotification(err.detail);
+            }
+        });
     }
 
     function dispatchErrorNotification(message) {
@@ -73,17 +71,21 @@ function App() {
             setLoggedIn(true);
             navigate("/");
         }).catch((errorResponse) => {
-            validateError(errorResponse);
+            errorResponse.then((err) => {
+                dispatchErrorNotification(err.message);
+            });
         });
     }
 
     useEffect(() => {
         const interval = setInterval(() => {
-            getActiveTask()
+            if (loggedIn) {
+                getActiveTask();
+            }
         }, 3000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [loggedIn]);
 
     function getActiveTask() {
         api.getActiveTask().then((res) => {

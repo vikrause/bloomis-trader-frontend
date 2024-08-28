@@ -86,11 +86,10 @@ class Api {
     setHeadersAuth(token) {
         this._headers = { ...this._headers, Authorization: `Bearer ${token}` };
     }
-
 }
 
 const api = new Api({
-    baseUrl: 'http://localhost',
+    baseUrl: process.env.REACT_APP_API_URL,
     headers: {
         'Content-Type': 'application/json'
     }
