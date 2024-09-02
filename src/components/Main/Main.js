@@ -5,15 +5,15 @@ export default function Main(props) {
     return (
         <main className="main">
             <CreateTask
-                onCreateTask ={props.onCreateTask}
+                onCreateTask={props.onCreateTask}
             />
             <ActiveTask
-                activeTask = {props.activeTask}
-                isDataActiveTask = {props.isDataActiveTask}
-                isActiveTaskPaused={props.isActiveTaskPaused}
-                onCancelTask ={props.onCancelTask}
-                onStartTask ={props.onStartTask}
-                onPauseTask ={props.onPauseTask}
+                activeTask={props.activeTask}
+                onCancelTask={props.onCancelTask}
+                onStartTask={props.onStartTask}
+                onPauseTask={props.onPauseTask}
+                isLoggedIn={props.isLoggedIn}
+                getActiveTask={props.getActiveTask}
             />
         </main>
     )

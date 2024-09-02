@@ -1,8 +1,7 @@
 .active_task {
     display: flex;
     max-width: 500px;
-    box-sizing: content-box;/*
-    border: 1px solid #cccccc;*/
+    box-sizing: content-box;
     border-radius: 15px;
     flex-direction: column;
     padding: 0 15px;
@@ -14,6 +13,21 @@
     padding: 0;
     margin: 23px 0;
     align-self: center;
+}
+
+.active_task__gif {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-self: center;
+}
+
+.active_task__info_text_paused {
+    color: #ac5855;
+}
+
+.active_task__info_text_active {
+    color: #3f7000;
 }
 
 .active_task__table {

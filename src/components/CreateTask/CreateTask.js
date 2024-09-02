@@ -1,4 +1,5 @@
-import {useState} from "react";
+import {useCallback, useEffect, useState} from "react";
+import React from "react";
 
 export default function CreateTask(props) {
     const [totalWithdrawalAmount, setTotalWithdrawalAmount] = useState('');
@@ -6,32 +7,62 @@ export default function CreateTask(props) {
     const [maxWithdrawalAmount, setMaxWithdrawalAmount] = useState('');
     const [paymentMethod, setPaymentMethod] = useState([]);
 
+    const [paymentMethodCheckboxState, setPaymentMethodCheckboxState] = useState({
+        mobile: false,
+        sbp: false,
+        card: false,
+    });
 
-    function handleTotalAmountInput(e) {
-        setTotalWithdrawalAmount(Number(e.target.value));
-    }
+    const {mobile, sbp, card} = paymentMethodCheckboxState;
 
-    function handleMinAmountInput(e) {
-        setMinWithdrawalAmount(Number(e.target.value));
-    }
+    const handleChange = (event) => {
+        setPaymentMethodCheckboxState({
+            ...paymentMethodCheckboxState,
+            [event.target.value]: event.target.checked,
+        });
+    };
 
-    function handleMaxAmountInput(e) {
-        setMaxWithdrawalAmount(Number(e.target.value));
-    }
+    useEffect(() => {
+        const filteredPaymentMethods = Object.keys(paymentMethodCheckboxState).filter(function (key) {
+            return paymentMethodCheckboxState[key]
+        });
+        setPaymentMethod(filteredPaymentMethods);
+    }, [paymentMethodCheckboxState]);
 
-    function handleMethodCheckboxChange(e) {
-        const checkedValue = e.target.value;
 
-        if (e.target.checked){
-            setPaymentMethod([...paymentMethod, checkedValue]);
-        } else {
-            setPaymentMethod(paymentMethod.filter(value => value !== checkedValue));
-        }
-    }
+    const onCreateTaskSubmit = useCallback(
+        async (
+            paymentMethod,
+            totalWithdrawalAmount,
+            minWithdrawalAmount,
+            maxWithdrawalAmount
+        ) => {
+            const dataTask = await props.onCreateTask(
+                totalWithdrawalAmount,
+                minWithdrawalAmount,
+                maxWithdrawalAmount,
+                paymentMethod
+            );
+            if (dataTask) {
+                setTotalWithdrawalAmount('');
+                setMinWithdrawalAmount('');
+                setMaxWithdrawalAmount('');
+                setPaymentMethodCheckboxState({
+                    mobile: false,
+                    sbp: false,
+                    card: false,
+                })
+            }
+        }, [props.onCreateTask])
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.onCreateTask(totalWithdrawalAmount, minWithdrawalAmount, maxWithdrawalAmount, paymentMethod);
+        onCreateTaskSubmit(
+            paymentMethod,
+            totalWithdrawalAmount,
+            minWithdrawalAmount,
+            maxWithdrawalAmount
+        );
     }
 
     return (
@@ -46,8 +77,8 @@ export default function CreateTask(props) {
                            name="total_withdrawal_amount"
                            type="number"
                            min="5000"
-                           value={totalWithdrawalAmount}
-                           onChange={handleTotalAmountInput}
+                           value={totalWithdrawalAmount || ''}
+                           onChange={(e) => setTotalWithdrawalAmount(Number(e.target.value))}
                            required
                     />
                 </div>
@@ -59,8 +90,8 @@ export default function CreateTask(props) {
                            name="min_withdrawal_amount"
                            type="number"
                            min="5000"
-                           value={minWithdrawalAmount}
-                           onChange={handleMinAmountInput}
+                           value={minWithdrawalAmount || ''}
+                           onChange={(e) => setMinWithdrawalAmount(Number(e.target.value))}
                            required
                     />
                 </div>
@@ -70,45 +101,48 @@ export default function CreateTask(props) {
                            id="create_task_max_withdrawal_amount"
                            form="create_task"
                            name="max_withdrawal_amount"
-                           value={maxWithdrawalAmount}
+                           value={maxWithdrawalAmount || ''}
                            min="5000"
-                           onChange={handleMaxAmountInput}
+                           onChange={(e) => setMaxWithdrawalAmount(Number(e.target.value))}
                            type="number"
                            required
                     />
                 </div>
-                <p className="create_task__metods__text">Методы</p>
+                <p className="create_task__methods__text">Методы</p>
 
-                <div className="create_task__metods">
-                    <div className="create_task__metods__item">
+                <div className="create_task__methods">
+                    <div className="create_task__methods__items">
                         <input className="create_task__checkbox"
                                id="payment_method_sbp"
                                form="create_task"
                                name="payment_method"
                                value="sbp"
-                               onChange={handleMethodCheckboxChange}
+                               onChange={handleChange}
+                               checked={sbp}
                                type="checkbox"
                         />
                         <label className="create_task__label" htmlFor="payment_method_sbp">СБП</label>
                     </div>
-                    <div className="create_task__metods__item">
+                    <div className="create_task__methods__items">
                         <input className="create_task__checkbox"
                                id="payment_method_mobile"
                                form="create_task"
                                name="payment_method"
                                value="mobile"
-                               onChange={handleMethodCheckboxChange}
+                               onChange={handleChange}
+                               checked={mobile}
                                type="checkbox"
                         />
                         <label className="create_task__label" htmlFor="payment_method_mobile">Мобильный счет</label>
                     </div>
-                    <div className="create_task__metods__item">
+                    <div className="create_task__methods__items">
                         <input className="create_task__checkbox"
                                id="payment_method_card"
                                form="create_task"
                                name="payment_method"
                                value="card"
-                               onChange={handleMethodCheckboxChange}
+                               onChange={handleChange}
+                               checked={card}
                                type="checkbox"
                         />
                         <label className="create_task__label" htmlFor="payment_method_card">Карта</label>

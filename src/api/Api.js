@@ -8,19 +8,19 @@ class Api {
         return (res.ok) ? res.json() : Promise.reject(res.json());
     }
 
-    loginUser(username, password){
+    loginUser(username, password) {
         return fetch(`${this._baseUrl}/api/login_check`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ username, password }),
+            body: JSON.stringify({username, password}),
         }).then((res) => {
             return this._checkResponse(res);
         });
     }
 
-    getToken(jwt){
+    getToken(jwt) {
         return fetch(`${this._baseUrl}/api/user`, {
             method: "GET",
             headers: {
@@ -84,7 +84,7 @@ class Api {
     }
 
     setHeadersAuth(token) {
-        this._headers = { ...this._headers, Authorization: `Bearer ${token}` };
+        this._headers = {...this._headers, Authorization: `Bearer ${token}`};
     }
 }
 

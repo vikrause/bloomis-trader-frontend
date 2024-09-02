@@ -1,21 +1,43 @@
-export default function ActiveTask({activeTask, isDataActiveTask, isActiveTaskPaused, onCancelTask, onStartTask, onPauseTask}) {
+import mem from '../../images/mem.gif'
+import {useEffect} from "react";
+
+export default function ActiveTask({
+    activeTask,
+    onCancelTask,
+    onStartTask,
+    onPauseTask,
+    isLoggedIn,
+    getActiveTask
+}) {
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (isLoggedIn) {
+                getActiveTask();
+            }
+        }, 3000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <section className="active_task">
             <p className="active_task__text">Активное задание</p>
-            {!isDataActiveTask &&
-                <p className="active_task__text">Нет активного задания</p>
-            }
-            {isDataActiveTask &&
+            {Object.keys(activeTask).length === 0 ? (
+                <>
+                    <p className="active_task__text">Нет активного задания</p>
+                    <img className="active_task__gif" src={mem} alt=""></img>
+                </>
+            ) : (
                 <>
                     <table className="active_task__table">
                         <tbody className="active_task__table_body">
                         <tr className="active_task__table_row">
                             <td className="active_task__info_text">Статус</td>
-                            <td className="active_task__info_text">{activeTask.status.toUpperCase()}</td>
+                            <td className={`active_task__info_text ${activeTask.status === 'paused' ? 'active_task__info_text_paused' : 'active_task__info_text_active'}`}>{activeTask.status.toUpperCase()}</td>
                         </tr>
                         <tr className="active_task__table_row">
                             <td className="active_task__info_text">Создано</td>
-                            <td className="active_task__info_textt">{(new Date(activeTask.created_at).toLocaleString())}</td>
+                            <td className="active_task__info_text">{(new Date(activeTask.created_at).toLocaleString())}</td>
                         </tr>
                         <tr className="active_task__table_row">
                             <td className="active_task__info_text">Общая сумма</td>
@@ -40,17 +62,19 @@ export default function ActiveTask({activeTask, isDataActiveTask, isActiveTaskPa
                         </tbody>
                     </table>
                     <div className="active_task__buttons">
-                        {isActiveTaskPaused &&
-                            <button className="active_task__button active_task__button__start" onClick={onStartTask} type="button">Старт</button>
-                        }
-                        {!isActiveTaskPaused &&
-                            <button className="active_task__button active_task__button__pause" onClick={onPauseTask} type="button">Пауза</button>
-                        }
-                        <button className="active_task__button active_task__button__cancel" onClick={onCancelTask} type="button">Отменить
+                        {activeTask.status === 'paused' ? (
+                            <button className="active_task__button active_task__button__start" onClick={onStartTask}
+                                    type="button">Старт</button>
+                        ) : (
+                            <button className="active_task__button active_task__button__pause" onClick={onPauseTask}
+                                    type="button">Пауза</button>
+                        )}
+                        <button className="active_task__button active_task__button__cancel" onClick={onCancelTask}
+                                type="button">Отменить
                         </button>
                     </div>
                 </>
-            }
+            )}
         </section>
     )
 }
