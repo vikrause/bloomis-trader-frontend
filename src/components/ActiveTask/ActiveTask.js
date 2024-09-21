@@ -52,12 +52,24 @@ export default function ActiveTask({
                             <td className="active_task__info_text">{activeTask.payment_method.join(', ').toUpperCase()}</td>
                         </tr>
                         <tr className="active_task__table_row">
-                            <td className="active_task__info_text">Заявок взято</td>
+                            <td className="active_task__info_text">Исключить Сбербанк</td>
+                            <td className="active_task__info_text">{activeTask.exclude_sber ? 'Да' : 'Нет'}</td>
+                        </tr>
+                        <tr className="active_task__table_row">
+                            <td className="active_task__info_text">Взято</td>
                             <td className="active_task__info_text">{activeTask.withdrawals_taken}</td>
                         </tr>
                         <tr className="active_task__table_row">
-                            <td className="active_task__info_text">Заявок взято на сумму</td>
+                            <td className="active_task__info_text">Взято на сумму</td>
                             <td className="active_task__info_text">{activeTask.withdrawals_taken_amount.toLocaleString()} руб.</td>
+                        </tr>
+                        <tr className="active_task__table_row">
+                            <td className="active_task__info_text">Пропущено</td>
+                            <td className="active_task__info_text">{activeTask.missed_withdrawals}</td>
+                        </tr>
+                        <tr className="active_task__table_row">
+                            <td className="active_task__info_text">Пропущено на сумму</td>
+                            <td className="active_task__info_text">{activeTask.missed_withdrawals_amount.toLocaleString()} руб.</td>
                         </tr>
                         </tbody>
                     </table>

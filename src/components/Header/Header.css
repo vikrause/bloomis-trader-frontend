@@ -16,6 +16,7 @@
     font-family: 'Tiny5', ‘Arial’, sans-serif;
     color: white;
     font-size: 25px;
+    text-decoration: none;
 }
 
 .header__links {
@@ -78,7 +79,6 @@
         max-width: 130px;
         max-height: 24px;
         font-size: 20px;
-
     }
 
     .header__link {

@@ -1,17 +1,31 @@
-import Login from "../Login/Login";
-import Main from "../Main/Main";
-import {Route, Routes, useNavigate} from 'react-router-dom';
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import React, {useEffect, useState} from "react";
-import Header from "../Header/Header";
+import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import React, {useCallback, useEffect, useState} from "react";
 import {ReactNotifications, Store} from 'react-notifications-component'
+
 import 'react-notifications-component/dist/theme.css'
 import api from "../../api/Api";
+import {CurrentUserContext} from "../../contexts/CurrentUserContext";
+
+
+import Login from "../Login/Login";
+import Main from "../Main/Main";
+import HistoryTasks from "../HistoryTasks/HistoryTasks";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import AppLayout from "../AppLayout/AppLayout";
+import {createTheme, ThemeProvider} from "@mui/material";
 
 function App() {
-    const navigate = useNavigate();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [dataActiveTask, setDataActiveTask] = useState({});
+    const [currentUser, setCurrentUser] = React.useState({});
+
+    const darkTheme = createTheme({
+        palette: {
+            mode: 'dark',
+        },
+    });
+
+    const navigate = useNavigate();
 
     async function login(username, password) {
         try {
@@ -23,49 +37,47 @@ function App() {
                 navigate("/");
             }
         } catch (errorResponse) {
-            console.log(errorResponse);
             dispatchErrorNotification(errorResponse.message);
         }
     }
 
-    async function getToken() {
+    const getToken = useCallback(async () => {
         const jwt = localStorage.getItem("jwt");
         if (jwt) {
             try {
-                const token = await api.getToken(jwt);
-                if (token) {
+                const userData = await api.checkToken(jwt);
+                if (userData) {
                     api.setHeadersAuth(jwt);
+                    setCurrentUser(userData);
                     setIsLoggedIn(true);
                     getActiveTask();
+                    navigate("/")
                 }
             } catch (errorResponse) {
                 validateError(errorResponse);
             }
         }
-    }
+    }, [])
 
     useEffect(() => {
         getToken();
-    }, [isLoggedIn]);
+    }, [isLoggedIn, getToken]);
 
-    useEffect(() => {
-        if (isLoggedIn) {
-            navigate("/");
-        }
-    }, [isLoggedIn, navigate]);
 
     async function createTask(
         totalWithdrawalAmount,
         minWithdrawalAmount,
         maxWithdrawalAmount,
-        paymentMethod
+        paymentMethod,
+        excludeSber
     ) {
         try {
             const dataTask = await api.createTask(
                 totalWithdrawalAmount,
                 minWithdrawalAmount,
                 maxWithdrawalAmount,
-                paymentMethod
+                paymentMethod,
+                excludeSber
             )
             if (dataTask) {
                 getActiveTask();
@@ -114,8 +126,11 @@ function App() {
                     "min_withdrawal_amount": dataTask.min_withdrawal_amount,
                     "max_withdrawal_amount": dataTask.max_withdrawal_amount,
                     "payment_method": dataTask.payment_method,
+                    "exclude_sber": dataTask.exclude_sber,
                     "withdrawals_taken": dataTask.withdrawals_taken,
-                    "withdrawals_taken_amount": dataTask.withdrawals_taken_amount
+                    "withdrawals_taken_amount": dataTask.withdrawals_taken_amount,
+                    "missed_withdrawals": dataTask.missed_withdrawals,
+                    "missed_withdrawals_amount": dataTask.missed_withdrawals_amount,
                 });
             }
         } catch (errorResponse) {
@@ -123,6 +138,14 @@ function App() {
             if (errorResponse.status === 401) {
                 signOut();
             }
+        }
+    }
+
+    async function getTaskList(limit, offset) {
+        try {
+            return await api.getTaskList(limit, offset);
+        } catch (errorResponse) {
+            validateError(errorResponse);
         }
     }
 
@@ -161,36 +184,62 @@ function App() {
 
     function signOut() {
         setIsLoggedIn(false);
+        setCurrentUser({});
         localStorage.removeItem("jwt");
         api.setHeadersAuth("");
         navigate("/login");
     }
 
     return (
-        <div className="page">
-            <ReactNotifications/>
-            <Header
-                isLoggedIn={isLoggedIn}
-                onClick={signOut}
-            />
-            <Routes>
-                <Route path="/login" element={
-                    <Login onLogin={login}/>
-                }/>
-                <Route exact path='/' element={
-                    <ProtectedRoute
-                        component={Main}
-                        isLoggedIn={isLoggedIn}
-                        onCreateTask={createTask}
-                        onCancelTask={cancelActiveTask}
-                        onStartTask={startActiveTask}
-                        onPauseTask={pauseActiveTask}
-                        activeTask={dataActiveTask}
-                        getActiveTask={getActiveTask}
-                    />
-                }/>
-            </Routes>
-        </div>
+
+        <ThemeProvider theme={darkTheme}>
+            <div className="app">
+                <ReactNotifications/>
+                <CurrentUserContext.Provider value={currentUser}>
+
+                    <Routes>
+                        <Route path="/"
+                               element={
+                                   <AppLayout
+                                       isLoggedIn={isLoggedIn}
+                                       onClick={signOut}
+                                   />
+                               }
+                        >
+                            <Route index
+                                   element={
+                                       <ProtectedRoute
+                                           component={Main}
+                                           isLoggedIn={isLoggedIn}
+                                           onCreateTask={createTask}
+                                           onCancelTask={cancelActiveTask}
+                                           onStartTask={startActiveTask}
+                                           onPauseTask={pauseActiveTask}
+                                           activeTask={dataActiveTask}
+                                           getActiveTask={getActiveTask}
+                                       />
+                                   }
+                            />
+                            <Route path='/history'
+                                   element={
+                                       <ProtectedRoute
+                                           component={HistoryTasks}
+                                           isLoggedIn={isLoggedIn}
+                                           getTaskList={getTaskList}
+                                       />
+                                   }
+                            />
+                        </Route>
+                        <Route path="/login"
+                               element={
+                                   <Login onLogin={login}/>
+                               }
+                        />
+                    </Routes>
+                </CurrentUserContext.Provider>
+            </div>
+        </ThemeProvider>
+
     );
 }
 

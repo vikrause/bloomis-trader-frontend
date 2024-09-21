@@ -20,7 +20,7 @@ class Api {
         });
     }
 
-    getToken(jwt) {
+    checkToken(jwt) {
         return fetch(`${this._baseUrl}/api/user`, {
             method: "GET",
             headers: {
@@ -32,7 +32,7 @@ class Api {
         });
     }
 
-    createTask(total_withdrawal_amount, min_withdrawal_amount, max_withdrawal_amount, payment_method) {
+    createTask(total_withdrawal_amount, min_withdrawal_amount, max_withdrawal_amount, payment_method, exclude_sber) {
         return fetch(`${this._baseUrl}/api/task`, {
             method: 'POST',
             headers: this._headers,
@@ -40,7 +40,8 @@ class Api {
                 total_withdrawal_amount: total_withdrawal_amount,
                 min_withdrawal_amount: min_withdrawal_amount,
                 max_withdrawal_amount: max_withdrawal_amount,
-                payment_method: payment_method
+                payment_method: payment_method,
+                exclude_sber: exclude_sber
             })
         }).then((res) => {
             return this._checkResponse(res);
@@ -78,6 +79,18 @@ class Api {
         return fetch(`${this._baseUrl}/api/activeTask`, {
             method: 'GET',
             headers: this._headers,
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
+    getTaskList(limit, offset) {
+        return fetch(`${this._baseUrl}/api/task?` + new URLSearchParams({
+            limit: limit,
+            offset: offset,
+        }).toString(), {
+            method: 'GET',
+            headers: this._headers
         }).then((res) => {
             return this._checkResponse(res);
         });

@@ -1,0 +1,12 @@
+.historyTask {
+    height: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 45px 20px ;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    justify-items: center;
+    gap: 20px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
