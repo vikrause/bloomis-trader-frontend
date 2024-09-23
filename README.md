@@ -1,6 +1,41 @@
-# Getting Started with Create React App
+# Bloomis Trader Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## About 
+
+Bloomis Trader Frontend is an admin panel frontend for the [trading bot](https://github.com/Adrianechhh/bloomis-trader-bot).
+
+![](docs/demo_video.gif)
+
+### Login page
+![](docs/login_page.png)
+
+### Main page
+
+Without active task:
+
+![](docs/main_page.png)
+
+Task in progress:
+
+![](docs/main_page2.png)
+
+### History page
+The table is a MUI component with server-side pagination:
+
+![](docs/history_page.png)
+
+### This project uses next technologies:
+
+* ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+* ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+* ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+* ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+* ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
+* `Flexbox`
+* `Grid-Layout`
+* `OOP principles`
+* `REST principles`
+* `MUI`
 
 ## Available Scripts
 
