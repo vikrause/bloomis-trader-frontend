@@ -96,6 +96,18 @@ class Api {
         });
     }
 
+    changePriority(priority) {
+        return fetch(`${this._baseUrl}/api/priority`, {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify({
+                priority: priority
+            })
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
     setHeadersAuth(token) {
         this._headers = {...this._headers, Authorization: `Bearer ${token}`};
     }

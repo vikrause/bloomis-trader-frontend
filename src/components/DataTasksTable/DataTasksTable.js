@@ -53,6 +53,7 @@ export default function DataTasksTable(props) {
     ];
 
     return (
+
         <div style={{height: 600, width: '100%'}}>
             <DataGrid
                 initialState={{

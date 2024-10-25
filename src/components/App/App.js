@@ -1,4 +1,4 @@
-import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {Route, Routes, useNavigate} from 'react-router-dom';
 import React, {useCallback, useEffect, useState} from "react";
 import {ReactNotifications, Store} from 'react-notifications-component'
 
@@ -13,6 +13,7 @@ import HistoryTasks from "../HistoryTasks/HistoryTasks";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import AppLayout from "../AppLayout/AppLayout";
 import {createTheme, ThemeProvider} from "@mui/material";
+import ChangePriority from "../ChangePriority/ChangePriority";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -182,6 +183,17 @@ function App() {
         }
     }
 
+    async function changePriority(priority) {
+        try {
+            const data = await api.changePriority(priority);
+            if (data) {
+                return data.priority;
+            }
+        } catch (errorResponse) {
+            validateError(errorResponse);
+        }
+    }
+
     function signOut() {
         setIsLoggedIn(false);
         setCurrentUser({});
@@ -226,6 +238,15 @@ function App() {
                                            component={HistoryTasks}
                                            isLoggedIn={isLoggedIn}
                                            getTaskList={getTaskList}
+                                       />
+                                   }
+                            />
+                            <Route path='/priority'
+                                   element={
+                                       <ProtectedRoute
+                                           component={ChangePriority}
+                                           isLoggedIn={isLoggedIn}
+                                           changePriority={changePriority}
                                        />
                                    }
                             />
