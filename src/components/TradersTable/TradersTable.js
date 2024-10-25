@@ -2,8 +2,7 @@ import {DataGrid} from "@mui/x-data-grid";
 import * as React from "react";
 import {useCallback, useEffect, useState} from "react";
 
-
-export default function  TradersTable(props) {
+export default function TradersTable(props) {
     const [tableData, setTableData] = useState([]);
     const [totalRows, setTotalRows] = useState(0);
     const [paginationModel, setPaginationModel] = React.useState({
@@ -33,7 +32,7 @@ export default function  TradersTable(props) {
                 'percent_deposit': trader.percent_deposit.toLocaleString() + '%',
                 'referrer_id': trader.referrer_id,
                 'ban_time': trader.ban_time,
-                'updated_at': (new Date(trader.created_at).toLocaleString()),
+                'updated_at': (new Date(trader.updated_at).toLocaleString()),
             });
         })
 

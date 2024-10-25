@@ -12,9 +12,8 @@ export default function Priority(props) {
 const onChangePriority = useCallback(
     async (priority) => {
         const data = await props.changePriority(priority);
-        if(data) {
-            dispatchSuccessNotification(data);
-
+        if (data) {
+            dispatchSuccessNotification(data.priority);
         }
     }, [props.changePriority]);
 

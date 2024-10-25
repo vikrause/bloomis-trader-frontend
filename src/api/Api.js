@@ -97,7 +97,7 @@ class Api {
     }
 
     getTradersList(limit, offset) {
-        return fetch(`${this._baseUrl}/api/trader?limit=25&offset=0` + new URLSearchParams({
+        return fetch(`${this._baseUrl}/api/trader?` + new URLSearchParams({
             limit: limit,
             offset: offset,
         }).toString(), {
