@@ -5,8 +5,9 @@ import {useCallback} from "react";
 
 import 'react-notifications-component/dist/theme.css'
 import {Store} from "react-notifications-component";
+import TradersTable from "../TradersTable/TradersTable";
 
-export default function ChangePriority(props) {
+export default function Priority(props) {
 
 const onChangePriority = useCallback(
     async (priority) => {
@@ -35,6 +36,7 @@ const onChangePriority = useCallback(
 
     return (
         <section className="priority">
+            <div className="priority__change">
             <p className="priority__title">Установить приоритет</p>
             <Box
                 sx={{
@@ -54,6 +56,10 @@ const onChangePriority = useCallback(
                     <Button type="button" onClick={() => {onChangePriority(5)}}>5</Button>
                 </ButtonGroup>
             </Box>
+            </div>
+            <p className="priority__title">Список трейдеров</p>
+
+            <TradersTable getTradersList={props.getTradersList}/>
         </section>
     )
 }

@@ -13,7 +13,7 @@ import HistoryTasks from "../HistoryTasks/HistoryTasks";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import AppLayout from "../AppLayout/AppLayout";
 import {createTheme, ThemeProvider} from "@mui/material";
-import ChangePriority from "../ChangePriority/ChangePriority";
+import Priority from "../Priority/Priority";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -150,6 +150,14 @@ function App() {
         }
     }
 
+    async function getTradersList(limit, offset) {
+        try {
+            return await api.getTradersList(limit, offset);
+        } catch (errorResponse) {
+            validateError(errorResponse);
+        }
+    }
+
     async function cancelActiveTask() {
         try {
             const dataTask = await api.cancelTask();
@@ -185,10 +193,7 @@ function App() {
 
     async function changePriority(priority) {
         try {
-            const data = await api.changePriority(priority);
-            if (data) {
-                return data.priority;
-            }
+            return await api.changePriority(priority);
         } catch (errorResponse) {
             validateError(errorResponse);
         }
@@ -244,9 +249,10 @@ function App() {
                             <Route path='/priority'
                                    element={
                                        <ProtectedRoute
-                                           component={ChangePriority}
+                                           component={Priority}
                                            isLoggedIn={isLoggedIn}
                                            changePriority={changePriority}
+                                           getTradersList={getTradersList}
                                        />
                                    }
                             />

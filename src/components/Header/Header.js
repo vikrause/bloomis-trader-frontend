@@ -16,8 +16,8 @@ export default function Header(props) {
                 }
                 {location.pathname === "/priority" &&
                     <>
-                        <Link to="/history" className="header__link">История задач</Link>
                         <Link to="/" className="header__link" type="button">Создать задачу</Link>
+                        <Link to="/history" className="header__link">История задач</Link>
                     </>
                 }
                 {location.pathname === "/" &&

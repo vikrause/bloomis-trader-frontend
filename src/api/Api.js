@@ -96,6 +96,18 @@ class Api {
         });
     }
 
+    getTradersList(limit, offset) {
+        return fetch(`${this._baseUrl}/api/trader?limit=25&offset=0` + new URLSearchParams({
+            limit: limit,
+            offset: offset,
+        }).toString(), {
+            method: 'GET',
+            headers: this._headers
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
     changePriority(priority) {
         return fetch(`${this._baseUrl}/api/priority`, {
             method: 'POST',

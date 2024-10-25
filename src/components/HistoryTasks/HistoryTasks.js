@@ -1,9 +1,9 @@
-import DataTasksTable from "../DataTasksTable/DataTasksTable";
+import TasksTable from "../TasksTable/TasksTable";
 
 export default function HistoryTasks(props) {
     return (
         <section className="historyTask">
-            <DataTasksTable getTaskList={props.getTaskList}/>
+            <TasksTable getTaskList={props.getTaskList}/>
         </section>
     )
 }

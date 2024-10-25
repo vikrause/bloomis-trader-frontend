@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useCallback, useEffect, useState} from 'react';
 import {DataGrid} from '@mui/x-data-grid';
 
-export default function DataTasksTable(props) {
+export default function TasksTable(props) {
     const [tableData, setTableData] = useState([]);
     const [totalRows, setTotalRows] = useState(0);
     const [paginationModel, setPaginationModel] = React.useState({
