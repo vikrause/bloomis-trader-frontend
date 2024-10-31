@@ -108,6 +108,30 @@ class Api {
         });
     }
 
+    getPaymentsList(limit, offset) {
+        return fetch(`${this._baseUrl}/api/payment?` + new URLSearchParams({
+            limit: limit,
+            offset: offset,
+        }).toString(), {
+            method: 'GET',
+            headers: this._headers
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
+    getCardsList(limit, offset) {
+        return fetch(`${this._baseUrl}/api/card?` + new URLSearchParams({
+            limit: limit,
+            offset: offset,
+        }).toString(), {
+            method: 'GET',
+            headers: this._headers
+        }).then((res) => {
+            return this._checkResponse(res);
+        });
+    }
+
     changePriority(priority) {
         return fetch(`${this._baseUrl}/api/priority`, {
             method: 'POST',

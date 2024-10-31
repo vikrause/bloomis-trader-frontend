@@ -37,6 +37,11 @@
     transition: opacity .3s linear;
 }
 
+.header__link_active {
+    color: #5dc5fd;
+    text-shadow: #5dc5fd 1px 0 10px;;
+}
+
 .header__link:hover {
     opacity: 0.6;
     cursor: pointer;
@@ -78,7 +83,7 @@
     }
 
     .header__link {
-        font-size: 15px;
+        font-size: 20px;
     }
 
     .header__links {

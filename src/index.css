@@ -9,3 +9,6 @@
 @import "components/ActiveTask/ActiveTask.css";
 @import "components/HistoryTasks/HistoryTasks.css";
 @import "components/Priority/Priority.css";
+@import "components/SubHeader/SubHeader.css";
+@import "components/Payments/Payments.css";
+@import "components/Cards/Cards.css";

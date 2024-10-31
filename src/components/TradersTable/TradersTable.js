@@ -6,7 +6,7 @@ export default function TradersTable(props) {
     const [tableData, setTableData] = useState([]);
     const [totalRows, setTotalRows] = useState(0);
     const [paginationModel, setPaginationModel] = React.useState({
-        pageSize: 25,
+        pageSize: 100,
         page: 0,
     });
 
@@ -70,7 +70,7 @@ export default function TradersTable(props) {
             <DataGrid
                 initialState={{
                     pagination: {
-                        paginationModel: {pageSize: 25, page: 0},
+                        paginationModel: {pageSize: 100, page: 0},
                     },
                 }}
                 paginationMode="server"

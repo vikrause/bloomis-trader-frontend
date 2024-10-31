@@ -14,6 +14,8 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import AppLayout from "../AppLayout/AppLayout";
 import {createTheme, ThemeProvider} from "@mui/material";
 import Priority from "../Priority/Priority";
+import Payments from "../Payments/Payments";
+import Cards from "../Cards/Cards";
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -158,6 +160,22 @@ function App() {
         }
     }
 
+    async function getPaymentsList(limit, offset) {
+        try {
+            return await api.getPaymentsList(limit, offset);
+        } catch (errorResponse) {
+            validateError(errorResponse);
+        }
+    }
+
+    async function getCardsList(limit, offset) {
+        try {
+            return await api.getCardsList(limit, offset);
+        } catch (errorResponse) {
+            validateError(errorResponse);
+        }
+    }
+
     async function cancelActiveTask() {
         try {
             const dataTask = await api.cancelTask();
@@ -253,6 +271,24 @@ function App() {
                                            isLoggedIn={isLoggedIn}
                                            changePriority={changePriority}
                                            getTradersList={getTradersList}
+                                       />
+                                   }
+                            />
+                            <Route path='/payments'
+                                   element={
+                                       <ProtectedRoute
+                                           component={Payments}
+                                           isLoggedIn={isLoggedIn}
+                                           getPaymentsList={getPaymentsList}
+                                       />
+                                   }
+                            />
+                            <Route path='/cards'
+                                   element={
+                                       <ProtectedRoute
+                                           component={Cards}
+                                           isLoggedIn={isLoggedIn}
+                                           getCardsList={getCardsList}
                                        />
                                    }
                             />
