@@ -49,7 +49,7 @@ export default function PaymentsTable(props) {
         {field: 'payment_id', headerName: 'ID платежа', width: 120},
         {field: 'user_id', headerName: 'ID юзера', width: 120},
         {field: 'trader_id', headerName: 'Трейдер', width: 90},
-        {field: 'amount', headerName: 'Сумма', width: 70},
+        {field: 'amount', headerName: 'Сумма', width: 120},
         {field: 'card_number', headerName: 'Карта', width: 160},
         {field: 'creation_time', headerName: 'Создан', width: 170},
         {field: 'status', headerName: 'Статус', width: 80},
